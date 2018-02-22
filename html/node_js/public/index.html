@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Ajax Basic</title>
+</head>
+
+<body>
+<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+<script>
+//    var request=new XMLHttpRequest();
+//    request.onreadystatechange=function(event){
+//    	if(request.readyState==4){
+//    		if(request.status==200){
+//    			var json=JSON.parse(request.responseText);
+//    			var output='';
+//
+//    			for(var i=0;i<json.length;i++){
+//    				for(var key in json[i]){
+//    					output+='<h1>'+i+':'+json[i][key]+'</h1>';
+//                    }
+//                }
+//
+//                document.body.innerHTML+=output;
+//            };
+//        };
+//
+//    };
+//
+//    request.open('GET','/data.json',true);
+//
+//    //Ajax 수행
+//    request.send(); ///
+
+//window.onload=function() {
+//	document.getElementById('get').onclick = function () {
+//		var request=new XMLHttpRequest();
+//		request.open('GET','/products',true);
+//		request.send();
+//		request.onreadystatechange=function(){
+//			if(request.readyState==4){
+//				if(request.status==200){
+//					document.getElementById('output').value=request.responseText;
+//                }
+//            }
+//        }
+//	};
+//	document.getElementById('post').onclick = function () {
+//		var name=document.getElementById('name').value;
+//		var price=document.getElementById('price').value;
+//
+//
+//		var request=new XMLHttpRequest();
+//		request.onreadystatechange=function(event){
+//			if(request.readyState==4){
+//				if(request.status==200){
+//					document.getElementById('output').value=request.responseText;
+//                }
+//            }
+//        };
+//		request.open('POST','/products',true);
+//		request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+//		request.send('name='+name+'&price='+price);
+//	};
+//	document.getElementById('put').onclick = function () {
+//		var name=document.getElementById('name').value;
+//		var price=document.getElementById('price').value;
+//
+//		var request=new XMLHttpRequest();
+//		request.open('PUT','/products/0',true);
+//		request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+//		request.send('name='+name+'&price='+price);
+//		request.onreadystatechange=function(event){
+//			if(request.readyState==4){
+//				if(request.status==200){
+//					document.getElementById('output').value=request.responseText;
+//                }
+//            }
+//        }
+//
+//	};
+//	document.getElementById('delete').onclick = function () {
+//		var request=new XMLHttpRequest();
+//		request.open('delete','/products/0',true);
+//		request.send();
+//		request.onreadystatechange=function(event){
+//			if(request.readyState==4){
+//				if(request.status==200){
+//					document.getElementById('output').value=request.responseText;
+//                }
+//            }
+//        };
+//	};
+//}
+
+//    $(document).ready(function(){
+////    	$.ajax({ //request.open('GET','/data.html',true)와 같은 역할
+////            url:'/parameter',
+////            type:'GET',
+////            data:{
+////            	name:'test',
+////                region:'test'
+////            },
+////    		success:function(data){
+////    			$('body').append(data);
+////            }
+////        });
+////        $.getJSON('/data.json',function(data){
+////        	$.each(data,function(key,value){
+////        		$('body').append('<h1>'+value.name+':'+value.price+'</h1>');
+////            });
+////        });
+////        $.ajax({
+////            url:'data.xml',
+////            success:function(data){
+////            	$(data).find('product').each(function(){
+////            		var name=$(this).find('name').text();
+////            		var price=$(this).find('price').text();
+////            		$('<h1></h1>').text(name+':'+price).appendTo('body');
+////
+////                })
+////            }
+////        })
+//        $('#get').click(function(){
+//        	$.ajax({
+//                url:'/products',
+//                type:'get',
+//                dataType:'text',
+//                success:function(data){
+//                	$('#output').val(data);
+//                }
+//            });
+//        });
+//	    $('#post').click(function(){
+//	    	$.ajax({
+//                url:'/products',
+//                type:'post',
+//                dataType:'text',
+//                data:{
+//                	name:$('#name').val(),
+//                	price:$('#price').val()
+//                },
+//                success:function(data){ //매개변수로 전달되서 작동하는 콜백함수
+//                	$('#output').val(data);
+//                }
+//            });
+//        });
+//	    $('#put').click(function(){
+//	    	$.ajax({
+//                url:'/products/0',
+//                type:'put',
+//                dataType:'text',
+//                data:{
+//                	name:$('#name').val(),
+//                    price:$('#price').val()
+//                },
+//                success:function(data){
+//                	$('#output').val(data);
+//                }
+//            })
+//        });
+//	    $('#delete').click(function(){
+//	    	$.ajax({
+//                url:'/products/0',
+//                type:'delete',
+//                dataType:'text',
+//                success:function(data){
+//                	$('#output').val(data);
+//                }
+//            })
+//        });
+//
+//
+//
+//	    $('#my-form').submit(function (event) {
+//
+//            $('#wrap').load('/parameter',$(this).serializeArray());
+//
+//		    event.preventDefault();
+//	    });
+//    });
+    $(document).ready(function(){
+    $('#get').click(function(){
+    	$.ajax({
+            url:'/products',
+            type:'get',
+            dataType:'text',
+            success:function(data){
+            	$('#output').val(data);
+            }
+        });
+    });
+
+    $('#post').click(function(){
+    	$.ajax({
+            url:'/products',
+            type:'post',
+            dataType:'text',
+            data:{
+            	name:$('#names').val(),
+                price:$('#price').val()
+            },
+            success:function(data){
+            	$('#output').val(data);
+            }
+        });
+    });
+    });
+</script>
+
+
+<button id="get">GET</button>
+<button id="post">POST</button>
+<button id="put">PUT</button>
+<button id="delete">DELETE</button>
+<h1>input</h1>
+<input id="names"/>
+<input id="price"/>
+<h1>output</h1>
+<textarea id="output" cols="40" rows="10" disabled="disabled"></textarea>
+
+<form id="my-form">
+    <table>
+        <tr>
+            <td><label for="name">Name</label></td>
+            <td><input id="name" name="name" type="text"/></td>
+        </tr>
+        <tr>
+            <td><label for="region">Region</label></td>
+            <td><input type="text" id="region" name="region"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Get Ajax String"/>
+</form>
+
+<div id="wrap">
+
+</div>
+
+
+
+</body>
+</html>

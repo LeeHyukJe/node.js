@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="button" name="All" value="전체 선택" onclick="select_all()">
+    <input type="button" name="Cancle" value="전체 해제" onclick="select_not()"><br>
+
+    <input type="checkbox" value="축구" name="soccer"> Soccer<br>
+    <input type="checkbox" value="야구" name="baseball"> BaseBall<br>
+    <input type="checkbox" value="농구" name="bascket"> BascketBall<br>
+    <input type="checkbox" value="배구" name="bollyball"> BollyBall<br>
+    <input type="checkbox" value="탁구" name="pingpong"> PingPong <br>
+    <input type="checkbox" value="하키" name="hakey">  Hakey <br>
+
+<div id="result">
+
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous">
+    </script>
+
+    <script>
+        var output='';
+        $(document).ready(function(){
+            setTimeout(function(){
+            	$('input:checked').each(function(index,item){
+                    output+=item.value+" ";
+                });
+            	$('div').html(output);
+            },5000);
+
+        });
+    </script>
+
+
+    <script>
+	    //전체 선택
+	    function select_all(){
+		    $(document).ready(function() {
+		    	var output='';
+				    $('input:checkbox').each(function (index, item) {
+					    $('input').prop('checked', true);
+					    output+=item.value+" ";
+				    });
+				    $('div').html(output);
+		    });
+	    }
+
+	    function select_not(){
+		    $(document).ready(function(){
+			    $('input:checkbox').each(function(index,item){
+				    $('input').prop('checked',false);
+			    });
+			    $('div').html('');
+		    })
+	    }
+    </script>
+
+</body>
+</html>

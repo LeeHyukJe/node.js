@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+</head>
+<body>
+<!--보조함수-->
+<script>
+	//랜덤 정수 생성
+	function nextRandomInteger(limit){
+		return Math.round(Math.random()*limit);
+	};
+
+	//랜덤 알파벳을 리턴
+	//var alphabet='ABCDEFGHIJKLNMOPQRSTUVWXYZ';
+	//function randomAlphabet(){
+	//return alphabet.charAt(nextRandomInteger(25));
+	// };
+
+	//클로저를 이용하여 랜덤 알파벳 리턴
+	var randomAlphabet=(function(){
+		var alphabet='ABCDEFGHIJKLNMOPQRSTUVWXYZ';
+		return function(){
+			return alphabet.charAt(nextRandomInteger(25));
+		}
+	})();
+
+	//양수와 음수로 랜덤한 속도를 생성
+	function randomSpeed(maxSpeed){
+		return Math.random()*maxSpeed-Math.random()*maxSpeed;
+	};
+</script>
+
+<!--생성자 함수-->
+<script>
+	var canvasWidth=700;
+	var canvasHeight=400;
+
+	function MovingText(){
+		this.x=nextRandomInteger(canvasWidth);
+		this.y=nextRandomInteger(canvasHeight);
+		this.vx=randomSpeed(10);
+		this.vy=randomSpeed(10);
+
+		//문서 객체를 생성
+		this.body=document.createElement('h1');
+		this.body.innerHTML=randomAlphabet();
+		this.body.style.position='absolute';
+
+		//문서 객체를 document.body에 추가합니다.
+		document.body.appendChild(this.body);
+	};
+
+	MovingText.prototype.move=function(){
+		//범위 검사
+		if(this.x<0 || this.y>canvasWidth){
+			this.vx*=-1;
+		}
+		if(this.y<0||this.y>canvasHeight){
+			this.vy*=-1;
+		}
+
+		//이동
+		this.x+=this.vx;
+		this.y+=this.vy;
+
+		//화면에 이동표시
+		this.body.style.left=this.x+'px';
+		this.body.style.top=this.y+'px';
+	};
+</script>
+
+<!--window-onload-->
+<script>
+	window.onload=function(){
+		//변수 선언
+		var movingTexts=[];
+
+		//배열에 MovingText객체 100개를 생성
+		for(var i=0;i<100;i++){
+			movingTexts.push(new MovingText());
+		}
+
+		//움직임 시작
+		setInterval(function(){
+			for(var i in movingTexts){
+				movingTexts[i].move();
+			}
+		},1000/60);
+	};
+
+</script>
+</body>
+</html>

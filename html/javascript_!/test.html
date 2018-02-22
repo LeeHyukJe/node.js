@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img id="card_front" src="img/card front.png" height="250" width="200"/>
+
+<button onclick=front_click()>뒤집기</button>
+<button onclick="invisible()">숨기기</button>
+<button onclick="visible()">보이기</button>
+<button onclick="shuffle()">섞기</button>
+<button onclick="match()">짝 맞추기 게임!</button>
+<script>
+
+
+	var card_array=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg'];
+	var match_card=['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg',
+		'img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg'];
+	var random;
+	//var card=new Array(10);
+	var marr; //맞출 카드
+	var check=new Array(2);
+	var change_index=new Array(2);
+	var flag=true;
+
+	//섞기
+	var shuffle=function(){
+		for(var i=0;i<card_array.length;i++){
+			random=Math.floor(Math.random()*5);
+			var temp=card_array[i];
+			card_array[i]=card_array[random];
+			card_array[random]=temp;
+		}
+		if(flag) {
+			show_shuffle(card_array);
+			random=Math.floor(Math.random()*5);
+			flag=false;
+		}
+		else {
+			delete_shuffle();
+			flag=true;
+		}
+	}
+
+	var front_click=function (){ //카드 뒤집기
+		var card=document.getElementById('card_front');
+		card.setAttribute('src','img/card back.jpg');
+	}
+	var invisible=function(){ //안 보이게 하기
+		var no_show=document.getElementById('card_frront');
+		no_show.style.visibility='hidden';
+	}
+
+	var visible=function(){ //보이게 하기
+		var show=document.getElementById('card_front');
+		show.style.visibility='visible';
+	}
+
+	//섞인 카드 보이게 하기
+	var show_shuffle=function(card_array){
+		var arr=new Array(5);
+		var ids=['1','2','3','4','5'];
+		for(var i=0;i<card_array.length;i++){
+			arr[i]=document.createElement('img');
+			arr[i].setAttribute('src',card_array[i]);
+			arr[i].setAttribute('id',ids[i]);
+			document.body.appendChild(arr[i]);
+		}
+	}
+
+	//섞인 카드 삭제
+
+	var delete_shuffle=function(){
+		var ids=['1','2','3','4','5'];
+		for(var i=0;i<card_array.length;i++) {
+			var remove = document.getElementById(ids[i]);
+			document.body.removeChild(remove);
+		}
+	}
+
+	var match=function(){
+		var back_card='img/card back.jpg';
+		marr=new Array(10);
+		var id_index=['c1','c2','c3','c','c5','c6','c7','c8','c9','c10'];
+
+		//카드 뒷면 보이게 하기
+		for(var i=0;i<marr.length;i++) {
+			marr[i] = document.createElement('img'); //<img>
+			marr[i].setAttribute('src', back_card); //<img src=>
+			marr[i].setAttribute('id', id_index[i]); //<img id=c1...c2....c3...>
+			document.body.appendChild(marr[i]);
+		}
+
+		//카드 낱장을 클릭하면 카드가 뒤집히게 하기
+		for(var i=0;i<10;i++){
+			marr[i]=document.getElementById(id_index[i]); //눌렀을때 나오는 카드
+		}
+
+
+
+//		for(var i=0;i<10;i++) {
+//			var ins=0;
+//
+//            //둘다 같은 함수
+//			var f=function(x){}
+//			f(i);
+//            //위와 같은 함수
+//			(function(x){})(i);
+//		}
+
+		for(var i=0;i<10;i++) {
+			var ins=0;
+
+			(function(x){
+				marr[x].onclick=function(){ //클릭을 하면
+					console.log(x);
+
+					this.setAttribute('src',match_card[x]);
+					console.log(x);
+					change_index[ins++]=x; //현재 인덱스를 저장하고
+					check[x]=this.src; //눌렀을때 카드의 src를 저장한다.
+
+					if(marr[change_index[0]].src!=check[change_index[1]]){
+						if(change_index[1]!=null) { //2번 클릭했으면
+							marr[change_index[0]].setAttribute('src', 'img/card back.jpg'); //0번 인덱스 카드를 뒤집어 준다.
+							marr[change_index[1]].src = 'img/card back.jpg'; //1번 인덱스 카드를 뒤집어 준다.
+							ins=0;
+							change_index.pop();
+							change_index.pop();
+						}
+					}
+					if(change_index[1]!=null) {
+						if(marr[change_index[0]].src==check[change_index[1]]){
+							ins = 0;
+							change_index.pop();
+							change_index.pop();
+						}
+					}
+				};
+			})(i);
+		}
+
+//           card[0].onclick=function(){
+//              this.setAttribute('src',match_card[0]);
+//              check[0]=1;
+//           };
+//           card[1].onclick=function(){
+//              this.setAttribute('src',match_card[1]);
+//              check[1]=1;
+//           };
+//           card[2].onclick=function(){
+//              this.setAttribute('src',match_card[2]);
+//              check[2]=1;
+//           };
+//           card[3].onclick=function(){
+//              this.setAttribute('src',match_card[3]);
+//              check[3]=1;
+//           };
+//           card[4].onclick=function(){
+//              this.setAttribute('src',match_card[4]);
+//              check[4]=1;
+//           };
+//           card[5].onclick=function(){
+//              this.setAttribute('src',match_card[5]);
+//              check[5]=1;
+//           };
+//           card[6].onclick=function(){
+//              this.setAttribute('src',match_card[6]);
+//              check[6]=1;
+//           };
+//           card[7].onclick=function(){
+//              this.setAttribute('src',match_card[7]);
+//              check[7]=1;
+//           };
+//           card[8].onclick=function(){
+//              this.setAttribute('src',match_card[8]);
+//              check[8]=1;
+//           };
+//           card[9].onclick=function(){
+//              this.setAttribute('src',match_card[9]);
+//              check[9]=1;
+//           };
+	}
+
+</script>
+</body>
+</html>

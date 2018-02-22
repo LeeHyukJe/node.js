@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous">
+</script>
+<script>
+//	var xml='';
+//	xml+='<friends>';
+//	xml+='  <friend>';
+//	xml+='      <name>leee</name>';
+//	xml+='      <language>Java</language>';
+//	xml+='  </friend>';
+//	xml+='  <friend>';
+//	xml+='      <name>park</name>';
+//	xml+='      <language>C</language>';
+//	xml+='  </friend>';
+//	xml+='</friends>';
+//
+//	$(document).ready(function(){
+//		var xmlDoc=$.parseXML(xml);
+//
+//		$(xmlDoc).find('friend').each(function(index){
+//            var output='';
+//
+//            output+='<div>';
+//            output+='   <h1>'+$(this).find('name').text()+'</h1>';
+//            output+='   <p1>'+$(this).find('language').text()+'</p1>';
+//            output+='</div>';
+//            document.body.innerHTML+=output;
+//        });
+//    });
+
+//    $(document).ready(function(){
+//    	$('button').click(function(){
+//            $(this).text('비활성화 하기');
+//
+//    		$(this).parent().css('backgroundColor',"skyblue");
+//    		$(this).parent().find('span').text('활성화');
+//        })
+//    })
+
+//    $(document).ready(function(){
+//    	$('h1').addClass(function(index){
+//    		return 'class'+index;
+//        });
+//    	$('h1').removeClass();
+//    });
+
+    $(document).ready(function(){
+        $('h1').on('click',function(){
+        	$(this).html(function(index, html){
+        		return html+'+';
+            });
+        })
+    });
+
+</script>
+
+<h1>header1</h1>
+<h1>header2</h1>
+<h1>header3</h1>
+
+
+</html>

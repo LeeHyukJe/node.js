@@ -1,0 +1,235 @@
+package homework_11_09;
+
+class Book{
+	private BookState state=Available.getInstance();
+
+	public void setState(BookState state) {
+		this.state=state;
+	}
+
+	public void checkout() {
+		state.checkout(this);
+	}
+
+	public void reserved() {
+		state.reserve(this);
+
+	}
+
+	public void cancel() {
+		state.cancle(this);
+
+	}
+
+	public void timeout() {
+		state.timeout(this);
+
+	}
+
+	public void book_return() {
+		state.Book_return(this);
+
+	}
+
+}
+
+interface BookState{
+	public void checkout(Book book);
+	public void reserve(Book book);
+	public void cancle(Book book);
+	public void timeout(Book book);
+	public void Book_return(Book book);
+}
+
+class Available implements BookState{ //대출 가능 상태
+
+	private static Available instance=new Available();
+
+	public static BookState getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void checkout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("책이 대출되었습니다. 대출중으로 변경됩니다.");
+		book.setState(onLoad.getInstance()); //대출중으로 바뀜
+	}
+
+	@Override
+	public void reserve(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("예약은 대출 상태에서만 가능합니다.");
+	}
+
+	@Override
+	public void cancle(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("이미 대출 가능 상태입니다.");
+	}
+
+	@Override
+	public void timeout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("대출 가능 상태입니다.");
+
+	}
+
+	@Override
+	public void Book_return(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("대출 가능 상태입니다.");
+	}
+
+
+
+}
+
+class onLoad implements BookState{
+
+	private static onLoad instance=new onLoad();
+
+	public static BookState getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void checkout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("대출 중입니다...");
+	}
+
+	@Override
+	public void reserve(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(Reserved.getInstance());
+		System.out.println("예약 되었습니다.");
+	}
+
+	@Override
+	public void cancle(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("대출 중인 책은 취소 할 수 없습니다.");
+	}
+
+	@Override
+	public void timeout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("대출 중인 도서입니다.");
+	}
+
+	@Override
+	public void Book_return(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(Available.getInstance());
+		System.out.println("책이 반납되었습니다.");
+	}
+
+
+
+}
+
+class Reserved implements BookState{
+
+	private static Reserved instance=new Reserved();
+
+	public static BookState getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void checkout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("예약 중입니다.");
+	}
+
+	@Override
+	public void reserve(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("예약 중입니다. 중복 예약은 지원하지 않습니다.");
+	}
+
+	@Override
+	public void cancle(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(onLoad.getInstance());
+		System.out.println("예약이 취소되었습니다. 해당 책은 대출중입니다.");
+	}
+
+	@Override
+	public void timeout(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("예약 중입니다.");
+	}
+
+	@Override
+	public void Book_return(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(Kept.getInstance());
+		System.out.println("예약 중인 도서가 반납되어 보관중으로 변경됩니다.");
+	}
+
+
+
+}
+
+class Kept implements BookState{
+
+	private static Kept instance=new Kept();
+
+	public static BookState getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void checkout(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(onLoad.getInstance());
+		System.out.println("보관중인 도서가 대출되었습니다.");
+	}
+
+	@Override
+	public void reserve(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("보관 중인 상태에서는 예약을 할 수 없습니다.");
+	}
+
+	@Override
+	public void cancle(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(Available.getInstance());
+		System.out.println("예약된 것이 취소되어 대출가능으로 변경됩니다.");
+	}
+
+	@Override
+	public void timeout(Book book) {
+		// TODO Auto-generated method stub
+		book.setState(Available.getInstance());
+		System.out.println("보관기간이 지나서 대출가능으로 변경됩니다.");
+	}
+
+	@Override
+	public void Book_return(Book book) {
+		// TODO Auto-generated method stub
+		System.out.println("보관중입니다.");
+	}
+
+
+
+}
+
+public class Client {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Book book=new Book();
+		book.checkout();
+		book.timeout();
+		book.book_return();
+		book.reserved();
+		book.book_return();
+		book.checkout();
+		book.reserved();
+		book.timeout();
+		book.reserved();
+		book.book_return();

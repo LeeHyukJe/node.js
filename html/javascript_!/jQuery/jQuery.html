@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .high0{background:yellow;}
+        .high1{background:blue;}
+        .high2{background:skyblue;}
+        .high3{background:deeppink;}
+    </style>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous">
+</script>
+
+<script>
+    $(document).ready(function() {
+	    var array = [
+		    {name: 'lee', link: 'http://www.naver.com'},
+		    {name: 'choi', link: 'http://www.daum.net'},
+		    {name: 'kim', link: 'http://www.kakao.com'}
+	    ];
+
+	    $.each(array, function (key, item) {
+		    var output = '';
+
+		    output += '<a href="' + item.link + '">';
+		    output += '   <h1>' + item.name + '</h1>';
+		    output += '</a>';
+		    document.body.innerHTML += output;
+	    });
+
+	    var object={name:'lee'};
+
+	    //객체 추가
+	    $.extend(object,{
+	    	region:'seoul seodaemungu',
+            part:'second guitar'
+        });
+
+	    var output='';
+
+	    $.each(object,function(key,item){
+	    	output+=key+':'+item+'\n';
+        });
+
+	    //---------------------//
+
+	    function test(option){
+	    	option=$.extend({
+                valueA:10,
+                valueB:20,
+                valueC:50,
+            },option);
+
+        }
+
+        test({
+            valueA:50,
+            valueC:1000
+        });
+
+	    //----------------------//
+
+//	    $('h1').filter(function (index){
+//	    	return index%3==0;
+//        }).css({
+//            backgroundColor:'black',
+//            color:'white'
+//        });
+
+        $('h2').each(function(){
+        	if($(this).is('.select')){
+        		$(this).css('color','red');
+            }
+        });
+
+
+
+
+
+    });
+
+</script>
+
+</body>
+</html>
